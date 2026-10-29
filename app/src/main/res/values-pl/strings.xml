@@ -296,6 +296,7 @@
   <string name="notify">Powiadomienie</string>
   <string name="notify_style">Klasyczny wygląd powiadomienia</string>
   <string name="notify_style_tip">Użyj klasycznego wyglądu powiadomienia</string>
+  <string name="notify_style_tip_hyperos">Na Xiaomi HyperOS używane jest systemowe powiadomienie multimediów (Super Island); klasyczny styl jest niedostępny</string>
   <string name="notify_bg_color_warnning">Najpierw włącz klasyczny wygląd powiadomienia</string>
   <string name="unlock_notification">Powiadomienie o odblokowaniu tekstu na pulpicie</string>
   <string name="click_to_unlock">Stuknij, aby odblokować</string>

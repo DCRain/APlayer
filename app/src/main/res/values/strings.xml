@@ -296,6 +296,7 @@
   <string name="notify">Notification</string>
   <string name="notify_style">Classic notification design</string>
   <string name="notify_style_tip">Use classic notification design</string>
+  <string name="notify_style_tip_hyperos">On Xiaomi HyperOS, system media notification is used for Super Island and classic style is unavailable</string>
   <string name="notify_bg_color_warnning">Please enable classic notification design first</string>
   <string name="unlock_notification">Unlock desktop lyrics notification</string>
   <string name="click_to_unlock">Tap to unlock</string>

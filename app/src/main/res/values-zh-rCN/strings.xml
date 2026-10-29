@@ -293,6 +293,7 @@
   <string name="notify">通知栏</string>
   <string name="notify_style">经典通知栏样式</string>
   <string name="notify_style_tip">使用经典通知栏样式</string>
+  <string name="notify_style_tip_hyperos">澎湃 OS 上将使用系统媒体通知以支持超级岛，经典样式不可用</string>
   <string name="notify_bg_color_warnning">请先打开经典通知栏</string>
   <string name="unlock_notification">解锁桌面歌词通知</string>
   <string name="click_to_unlock">点击解除锁定</string>

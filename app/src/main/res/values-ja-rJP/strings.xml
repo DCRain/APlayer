@@ -287,6 +287,7 @@
   <string name="notify">通知</string>
   <string name="notify_style">クラシック通知デザイン</string>
   <string name="notify_style_tip">従来の通知デザインを使用します</string>
+  <string name="notify_style_tip_hyperos">Xiaomi HyperOS ではスーパーアイランド対応のためシステムメディア通知を使用し、クラシック様式は利用できません</string>
   <string name="notify_bg_color_warnning">先にクラシック通知デザインを有効化してください</string>
   <string name="unlock_notification">アンロック通知</string>
   <string name="click_to_unlock">タップでロック解除します</string>

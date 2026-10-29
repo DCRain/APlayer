@@ -1,7 +1,6 @@
 package remix.myplayer.service.notification
 
 import android.annotation.TargetApi
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
@@ -15,7 +14,6 @@ import remix.myplayer.R
 import remix.myplayer.data.model.audio.Song
 import remix.myplayer.service.Command
 import remix.myplayer.service.MusicService
-import remix.myplayer.service.MusicService.Companion.EXTRA_COMMAND
 import remix.myplayer.util.DensityUtil
 
 /**
@@ -31,6 +29,9 @@ NotifyImpl24(context: MusicService) : Notify(context) {
 
   override fun updateAndNotify() {
     val song = playbackState.song
+    if (!song.valid()) {
+      return
+    }
 
     //设置封面
     Glide.with(service).clear(target)
@@ -58,14 +59,11 @@ NotifyImpl24(context: MusicService) : Notify(context) {
   }
 
   private fun updateWithBitmap(bitmap: Bitmap?, song: Song) {
-    if (song.id != playbackState.song.id) {
+    if (song.id != playbackState.song.id || !playbackState.song.valid()) {
       return
     }
     val playPauseIcon =
       if (playbackState.isPlaying) R.drawable.ic_pause_black_24dp else R.drawable.ic_play_arrow_black_24dp
-
-    val deleteIntent = Intent(MusicService.ACTION_CMD)
-    deleteIntent.putExtra(EXTRA_COMMAND, Command.CLOSE_NOTIFY)
 
     val desktopLyricLock = lyricManager.isDesktopLyricLocked
 
@@ -104,7 +102,8 @@ NotifyImpl24(context: MusicService) : Notify(context) {
       .setContentText(song.artist + " - " + song.album)
       .setStyle(
         androidx.media.app.NotificationCompat.MediaStyle()
-          .setShowActionsInCompactView(0, 1, 2, 3)
+          // 折叠态保留上一曲/播放暂停/下一曲，便于超级岛与通知栏紧凑展示
+          .setShowActionsInCompactView(0, 1, 2)
           .setMediaSession(service.mediaSession.sessionToken)
       )
       .build()

@@ -61,20 +61,30 @@ fun SwitchPreference(
   title: String,
   content: String? = null,
   checked: Boolean,
+  enabled: Boolean = true,
   onCheckedChange: (Boolean) -> Unit
 ) {
-  Preference(onClick = {
-    onCheckedChange(!checked)
-  }, title, content) {
+  Preference(
+    onClick = {
+      if (enabled) {
+        onCheckedChange(!checked)
+      }
+    },
+    title,
+    content
+  ) {
     Switch(
       modifier = Modifier.scale(0.9f),
       checked = checked,
+      enabled = enabled,
       colors = SwitchDefaults.colors().copy(
         checkedTrackColor = LocalTheme.current.secondary,
         uncheckedTrackColor = Color.Transparent
       ),
       onCheckedChange = {
-        onCheckedChange(it)
+        if (enabled) {
+          onCheckedChange(it)
+        }
       })
   }
 }

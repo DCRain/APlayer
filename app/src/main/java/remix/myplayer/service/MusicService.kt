@@ -68,6 +68,7 @@ import remix.myplayer.ui.activity.base.BaseMusicActivity
 import remix.myplayer.ui.activity.base.BaseMusicActivity.Companion.EXTRA_PERMISSION
 import remix.myplayer.ui.activity.base.BaseMusicActivity.Companion.EXTRA_PLAYLIST
 import remix.myplayer.ui.nav.MessageNotifier
+import remix.myplayer.util.HyperOsUtils
 import remix.myplayer.util.Constants.ACTION_EXIT
 import remix.myplayer.util.PermissionUtil
 import remix.myplayer.util.Util
@@ -336,11 +337,7 @@ class MusicService : BaseService(),
       // 通知栏样式
       PrefKeys.Setting.NOTIFY_STYLE_CLASSIC -> {
         val wasShowing = notify.isNotifyShowing
-        notify = if (settingPrefs.classicNotify) {
-          NotifyImpl(this@MusicService)
-        } else {
-          NotifyImpl24(this@MusicService)
-        }
+        notify = createPlayingNotify()
         if (wasShowing) {
           // 先取消再重新显示 让通知栏彻底刷新一次
           notify.stopForegroundAndNotification()
@@ -394,13 +391,8 @@ class MusicService : BaseService(),
     getSharedPreferences(PrefKeys.Setting.NAME, MODE_PRIVATE)
       .registerOnSharedPreferenceChangeListener(this)
 
-    // 通知栏
-    settingPrefs.classicNotify
-    notify = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && !settingPrefs.classicNotify) {
-      NotifyImpl24(this)
-    } else {
-      NotifyImpl(this)
-    }
+    // 通知栏：HyperOS 强制 MediaStyle 以支持超级岛，其它机型尊重经典样式设置
+    notify = createPlayingNotify()
 
     // 初始化Receiver
     val eventFilter = IntentFilter()
@@ -1106,6 +1098,20 @@ class MusicService : BaseService(),
 
   fun updateNotification() {
     notify.updateAndNotify()
+  }
+
+  /**
+   * HyperOS 上强制 MediaStyle（NotifyImpl24）以支持超级岛；
+   * 其它设备在 API ≥ N 且未开启经典样式时使用 MediaStyle，否则使用经典 RemoteViews。
+   */
+  private fun createPlayingNotify(): Notify {
+    val useMediaStyle = HyperOsUtils.shouldForceMediaStyleNotify() ||
+        (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && !settingPrefs.classicNotify)
+    return if (useMediaStyle) {
+      NotifyImpl24(this)
+    } else {
+      NotifyImpl(this)
+    }
   }
 
   fun updateNotificationWithLrc(lrc: String) {

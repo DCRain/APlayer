@@ -293,6 +293,7 @@
   <string name="notify">通知列</string>
   <string name="notify_style">經典通知列樣式</string>
   <string name="notify_style_tip">使用經典通知列樣式</string>
+  <string name="notify_style_tip_hyperos">澎湃 OS 上將使用系統媒體通知以支援超級島，經典樣式不可用</string>
   <string name="notify_bg_color_warnning">請先打開經典通知列</string>
   <string name="unlock_notification">解鎖浮動歌詞通知</string>
   <string name="click_to_unlock">點擊解除鎖定</string>
